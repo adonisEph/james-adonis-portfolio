@@ -174,7 +174,7 @@ export function PortfolioPage() {
     <div id="top" className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.095] dark:opacity-[0.12]"
+        className="pointer-events-none absolute inset-0 opacity-[0.095] dark:opacity-[0.24]"
         style={{
           backgroundImage: "var(--pattern-url)",
           backgroundRepeat: "repeat",
@@ -239,16 +239,18 @@ export function PortfolioPage() {
               </div>
             </div>
 
-            <div className="mx-auto w-full max-w-[240px] md:mx-0">
-              <Image
-                src={portfolio.heroImage.src}
-                alt={portfolio.heroImage.alt}
-                width={240}
-                height={240}
-                priority
-                unoptimized
-                className="h-auto w-full rounded-full bg-muted object-cover ring-1 ring-border shadow-sm"
-              />
+            <div className="mx-auto w-full max-w-[220px] md:mx-0">
+              <div className="relative aspect-square overflow-hidden rounded-full bg-muted ring-1 ring-border shadow-sm">
+                <Image
+                  src={portfolio.heroImage.src}
+                  alt={portfolio.heroImage.alt}
+                  fill
+                  priority
+                  unoptimized
+                  sizes="(max-width: 768px) 220px, 220px"
+                  className="object-cover object-center scale-[1.12]"
+                />
+              </div>
             </div>
           </section>
         </Reveal>
