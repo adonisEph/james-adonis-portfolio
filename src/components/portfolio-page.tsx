@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ExternalLink, Github, Linkedin, Mail } from "lucide-react";
+import { ExternalLink, Github, Linkedin, Mail, Video } from "lucide-react";
 
 import { getPortfolio, type Locale } from "@/content/portfolio";
 import { getTechMeta } from "@/lib/tech";
@@ -170,6 +170,14 @@ export function PortfolioPage() {
     portfolio.links.primary.find((l) => l.href.startsWith("mailto:"))?.href ??
     "mailto:";
 
+  const scrollToTop = React.useCallback(() => {
+    try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   return (
     <div id="top" className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <div
@@ -188,7 +196,7 @@ export function PortfolioPage() {
         onLocaleChange={(next) => setLocale(next)}
       />
 
-      <main className="mx-auto w-full max-w-5xl px-6 py-10">
+      <main className="mx-auto w-full max-w-5xl px-6 pb-10 pt-24">
         <Reveal>
           <section className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
             <div className="flex flex-col gap-4">
@@ -209,12 +217,15 @@ export function PortfolioPage() {
               <div className="flex flex-wrap gap-3">
                 {portfolio.links.primary.map((l) => {
                   const lower = l.label.toLowerCase();
+                  const hrefLower = l.href.toLowerCase();
                   const icon = lower.includes("email") ? (
                     <Mail className="size-4" />
                   ) : lower.includes("github") ? (
                     <Github className="size-4" />
                   ) : lower.includes("linkedin") ? (
                     <Linkedin className="size-4" />
+                  ) : hrefLower.includes("teams.microsoft") || lower.includes("teams") ? (
+                    <Video className="size-4" />
                   ) : (
                     <ExternalLink className="size-4" />
                   );
@@ -240,14 +251,14 @@ export function PortfolioPage() {
             </div>
 
             <div className="mx-auto w-full max-w-[220px] md:mx-0">
-              <div className="relative aspect-square overflow-hidden rounded-full bg-muted ring-1 ring-border shadow-sm">
+              <div className="relative mx-auto h-[220px] w-[220px] overflow-hidden rounded-full bg-muted ring-1 ring-border shadow-sm md:mx-0">
                 <Image
                   src={portfolio.heroImage.src}
                   alt={portfolio.heroImage.alt}
                   fill
                   priority
                   unoptimized
-                  sizes="(max-width: 768px) 220px, 220px"
+                  sizes="220px"
                   className="object-cover object-center scale-[1.12]"
                 />
               </div>
@@ -417,7 +428,7 @@ export function PortfolioPage() {
               description={t.contact.description}
             >
               <div className="grid gap-4 md:grid-cols-2">
-                <Card>
+                <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
                   <CardHeader>
                     <CardTitle>{t.contact.formTitle}</CardTitle>
                     <CardDescription>{t.contact.formDesc}</CardDescription>
@@ -437,19 +448,36 @@ export function PortfolioPage() {
                   </CardFooter>
                 </Card>
 
-                <Card>
+                <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
                   <CardHeader>
                     <CardTitle>{t.contact.linksTitle}</CardTitle>
                     <CardDescription>{t.contact.linksDesc}</CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-wrap gap-2">
-                    {portfolio.links.primary.map((l) => (
-                      <Button key={l.href} variant="outline" asChild>
-                        <a href={l.href} target="_blank" rel="noopener noreferrer">
-                          {l.label}
-                        </a>
-                      </Button>
-                    ))}
+                    {portfolio.links.primary.map((l) => {
+                      const lower = l.label.toLowerCase();
+                      const hrefLower = l.href.toLowerCase();
+                      const icon = hrefLower.startsWith("mailto:") || lower.includes("email") ? (
+                        <Mail className="size-4" />
+                      ) : hrefLower.includes("github") || lower.includes("github") ? (
+                        <Github className="size-4" />
+                      ) : hrefLower.includes("linkedin") || lower.includes("linkedin") ? (
+                        <Linkedin className="size-4" />
+                      ) : hrefLower.includes("teams.microsoft") || lower.includes("teams") ? (
+                        <Video className="size-4" />
+                      ) : (
+                        <ExternalLink className="size-4" />
+                      );
+
+                      return (
+                        <Button key={l.href} variant="outline" asChild>
+                          <a href={l.href} target="_blank" rel="noopener noreferrer">
+                            {icon}
+                            {l.label}
+                          </a>
+                        </Button>
+                      );
+                    })}
                   </CardContent>
                 </Card>
               </div>
@@ -462,9 +490,14 @@ export function PortfolioPage() {
             <p>
               © {new Date().getFullYear()} {portfolio.name}
             </p>
-            <a className="underline underline-offset-4" href="#top">
+            <Button
+              type="button"
+              variant="link"
+              className="h-auto p-0 text-muted-foreground underline underline-offset-4"
+              onClick={scrollToTop}
+            >
               {t.top}
-            </a>
+            </Button>
           </div>
         </footer>
       </main>

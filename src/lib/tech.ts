@@ -36,6 +36,11 @@ const TECH: Record<string, TechMeta> = {
     iconClassName: "text-yellow-500",
     badgeClassName: "border-yellow-500/25 bg-yellow-500/10",
   },
+  uiuxdesign: {
+    Icon: Palette,
+    iconClassName: "text-pink-500",
+    badgeClassName: "border-pink-500/25 bg-pink-500/10",
+  },
   typescript: {
     Icon: Braces,
     iconClassName: "text-blue-500",

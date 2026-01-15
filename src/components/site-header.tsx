@@ -37,7 +37,7 @@ export function SiteHeader({
   const nav = navByLocale[locale];
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
+    <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-4">
         <div className="flex items-center gap-3">
           <Link href="#top" className="font-semibold tracking-tight">

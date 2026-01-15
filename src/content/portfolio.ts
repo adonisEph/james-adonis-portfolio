@@ -47,6 +47,7 @@ export type Portfolio = {
 };
 
 const linkedInUrl = "https://www.linkedin.com/in/adonis-djimby-b539a3167";
+const teamsUrl = "https://teams.microsoft.com/l/chat/0/0?users=jamesdjimby@gmail.com";
 
 const portfolioByLocale = {
   fr: {
@@ -58,7 +59,7 @@ const portfolioByLocale = {
       alt: "Photo professionnelle de James Adonis DJIMBY",
     },
     pitch:
-      "Spécialiste en automatisation et développement Full‑Stack. Je transforme vos fichiers Excel et processus manuels en applications intelligentes qui travaillent pour vous 24/7. Expertise : systèmes de gestion automatisée, plateformes de réservation, outils métiers sur mesure. React • Node.js • PostgreSQL.",
+      "Développeur Full‑Stack orienté produit : j’automatise les processus (Excel → Web) et je conçois des interfaces claires (UI/UX) pour transformer des tâches manuelles en outils fiables, rapides et agréables à utiliser. React • Next.js • Node.js • PostgreSQL.",
     summary:
       "Je conçois des solutions web et des outils métiers sur mesure, avec une approche orientée résultat : automatiser, fiabiliser et accélérer les opérations. J’interviens sur l’architecture, le développement front/back, la base de données et l’intégration des processus (notamment depuis Excel) vers des applications robustes.",
     links: {
@@ -66,8 +67,9 @@ const portfolioByLocale = {
         { label: "Email", href: "mailto:jamesdjimby@gmail.com" },
         { label: "LinkedIn", href: linkedInUrl },
         { label: "GitHub", href: "https://github.com/adonisEph" },
+        { label: "Teams", href: teamsUrl },
       ],
-      secondary: [{ label: "Télécharger le CV", href: "/cv.pdf" }],
+      secondary: [{ label: "Télécharger le CV", href: "/Mon%20CV%20MAJ.pdf" }],
     },
     skills: [
       "JavaScript",
@@ -76,6 +78,7 @@ const portfolioByLocale = {
       "Next.js",
       "Node.js",
       "PostgreSQL",
+      "UI/UX Design",
       "API REST",
       "Automatisation (Excel → Web)",
       "Vite",
@@ -150,7 +153,7 @@ const portfolioByLocale = {
       alt: "Professional portrait of James Adonis DJIMBY",
     },
     pitch:
-      "Automation and Full‑Stack development specialist. I turn Excel files and manual processes into smart applications that work for you 24/7. Expertise: automated management systems, booking platforms, and custom business tools. React • Node.js • PostgreSQL.",
+      "Product‑minded Full‑Stack developer: I automate workflows (Excel → Web) and design clean UI/UX to turn manual tasks into reliable, fast, and pleasant tools. React • Next.js • Node.js • PostgreSQL.",
     summary:
       "I build web applications and custom business tools with a results-driven approach: automate, standardize, and accelerate operations. I work across architecture, frontend/backend development, databases, and process integration (including migrating Excel workflows into robust web apps).",
     links: {
@@ -158,8 +161,9 @@ const portfolioByLocale = {
         { label: "Email", href: "mailto:jamesdjimby@gmail.com" },
         { label: "LinkedIn", href: linkedInUrl },
         { label: "GitHub", href: "https://github.com/adonisEph" },
+        { label: "Teams", href: teamsUrl },
       ],
-      secondary: [{ label: "Download CV", href: "/cv.pdf" }],
+      secondary: [{ label: "Download CV", href: "/Mon%20CV%20MAJ.pdf" }],
     },
     skills: [
       "JavaScript",
@@ -168,6 +172,7 @@ const portfolioByLocale = {
       "Next.js",
       "Node.js",
       "PostgreSQL",
+      "UI/UX Design",
       "REST APIs",
       "Automation (Excel → Web)",
       "Vite",
