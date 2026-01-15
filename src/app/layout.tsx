@@ -20,7 +20,19 @@ export const metadata: Metadata = {
   description:
     "Portfolio professionnel : projets, compétences et expériences.",
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    icon: [
+      {
+        url: "/favicon-light.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon-dark.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
   },
 };
 

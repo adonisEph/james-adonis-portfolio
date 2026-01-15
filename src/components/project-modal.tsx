@@ -17,9 +17,21 @@ import {
 } from "@/components/ui/card";
 import type { PortfolioProject } from "@/content/portfolio";
 
-function PhoneFrame({ src, alt }: { src: string; alt: string }) {
+function PhoneFrame({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
-    <div className="relative aspect-9/16 overflow-hidden rounded-3xl border bg-card shadow-lg">
+    <div
+      className={`relative aspect-9/16 overflow-hidden rounded-3xl border bg-card shadow-lg ${
+        className ?? ""
+      }`}
+    >
       <div className="absolute inset-2 rounded-[1.8rem] border bg-black" />
       <div className="absolute left-1/2 top-2 h-5 w-24 -translate-x-1/2 rounded-full bg-card shadow-sm" />
       <div className="absolute inset-3 overflow-hidden rounded-[1.6rem] bg-black">
@@ -29,9 +41,21 @@ function PhoneFrame({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-function DesktopFrame({ src, alt }: { src: string; alt: string }) {
+function DesktopFrame({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
-    <div className="relative aspect-video overflow-hidden rounded-xl border bg-card shadow-lg">
+    <div
+      className={`relative aspect-video overflow-hidden rounded-xl border bg-card shadow-lg ${
+        className ?? ""
+      }`}
+    >
       <div className="absolute inset-x-0 top-0 z-10 flex h-8 items-center gap-1.5 border-b bg-muted/60 px-3">
         <span className="size-2 rounded-full bg-red-500/70" />
         <span className="size-2 rounded-full bg-yellow-500/70" />
@@ -61,16 +85,30 @@ export function ProjectModal({
     details: string;
   };
 }) {
+  const [lightbox, setLightbox] = React.useState<
+    | {
+        src: string;
+        alt: string;
+        isMobile: boolean;
+      }
+    | null
+  >(null);
+
   React.useEffect(() => {
     if (!open) return;
 
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key !== "Escape") return;
+      if (lightbox) {
+        setLightbox(null);
+        return;
+      }
+      onClose();
     }
 
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose]);
+  }, [open, onClose, lightbox]);
 
   React.useEffect(() => {
     if (!open) return;
@@ -93,6 +131,29 @@ export function ProjectModal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
+      {lightbox ? (
+        <div
+          className="fixed inset-0 z-110 flex items-center justify-center bg-black/80 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightbox.alt}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setLightbox(null);
+          }}
+        >
+          <div className="w-full">
+            {lightbox.isMobile ? (
+              <div className="mx-auto h-[92vh] max-w-[92vw]">
+                <PhoneFrame src={lightbox.src} alt={lightbox.alt} className="h-full w-auto" />
+              </div>
+            ) : (
+              <div className="mx-auto w-[96vw] max-w-6xl">
+                <DesktopFrame src={lightbox.src} alt={lightbox.alt} />
+              </div>
+            )}
+          </div>
+        </div>
+      ) : null}
       <div className="w-full max-w-3xl">
         <Card className="max-h-[85vh] overflow-hidden">
           <CardHeader className="flex flex-row items-start justify-between gap-4">
@@ -128,13 +189,23 @@ export function ProjectModal({
                     const isMobile = img.alt.toLowerCase().includes("mobile");
 
                     return (
-                      <div key={img.src} className={isMobile ? "mx-auto w-full max-w-[260px]" : "w-full"}>
+                      <button
+                        key={img.src}
+                        type="button"
+                        className={
+                          isMobile
+                            ? "mx-auto w-full max-w-[260px] text-left"
+                            : "w-full text-left"
+                        }
+                        onClick={() => setLightbox({ src: img.src, alt: img.alt, isMobile })}
+                        aria-label={img.alt}
+                      >
                         {isMobile ? (
                           <PhoneFrame src={img.src} alt={img.alt} />
                         ) : (
                           <DesktopFrame src={img.src} alt={img.alt} />
                         )}
-                      </div>
+                      </button>
                     );
                   })}
                 </div>

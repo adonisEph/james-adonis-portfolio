@@ -171,7 +171,16 @@ export function PortfolioPage() {
     "mailto:";
 
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground">
+    <div id="top" className="relative min-h-screen overflow-hidden bg-background text-foreground">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
+        style={{
+          backgroundImage: "url(/pattern.svg)",
+          backgroundRepeat: "repeat",
+          backgroundSize: "240px 240px",
+        }}
+      />
       <SiteHeader
         name={portfolio.name}
         role={portfolio.role}
@@ -232,16 +241,15 @@ export function PortfolioPage() {
 
             <div className="mx-auto w-full max-w-[240px] md:mx-0">
               <div className="rounded-2xl border bg-card p-3 shadow-sm">
-                <div className="relative aspect-square overflow-hidden rounded-full bg-muted ring-1 ring-border">
-                  <Image
-                    src={portfolio.heroImage.src}
-                    alt={portfolio.heroImage.alt}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 240px, 240px"
-                    className="object-cover"
-                  />
-                </div>
+                <Image
+                  src={portfolio.heroImage.src}
+                  alt={portfolio.heroImage.alt}
+                  width={240}
+                  height={240}
+                  priority
+                  unoptimized
+                  className="h-auto w-full rounded-full bg-muted object-cover ring-1 ring-border"
+                />
               </div>
             </div>
           </section>
