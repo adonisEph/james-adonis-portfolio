@@ -174,9 +174,9 @@ export function PortfolioPage() {
     <div id="top" className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.06]"
+        className="pointer-events-none absolute inset-0 opacity-[0.095] dark:opacity-[0.12]"
         style={{
-          backgroundImage: "url(/pattern.svg)",
+          backgroundImage: "var(--pattern-url)",
           backgroundRepeat: "repeat",
           backgroundSize: "240px 240px",
         }}
@@ -240,17 +240,15 @@ export function PortfolioPage() {
             </div>
 
             <div className="mx-auto w-full max-w-[240px] md:mx-0">
-              <div className="rounded-2xl border bg-card p-3 shadow-sm">
-                <Image
-                  src={portfolio.heroImage.src}
-                  alt={portfolio.heroImage.alt}
-                  width={240}
-                  height={240}
-                  priority
-                  unoptimized
-                  className="h-auto w-full rounded-full bg-muted object-cover ring-1 ring-border"
-                />
-              </div>
+              <Image
+                src={portfolio.heroImage.src}
+                alt={portfolio.heroImage.alt}
+                width={240}
+                height={240}
+                priority
+                unoptimized
+                className="h-auto w-full rounded-full bg-muted object-cover ring-1 ring-border shadow-sm"
+              />
             </div>
           </section>
         </Reveal>
