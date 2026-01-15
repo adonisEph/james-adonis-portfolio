@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolio professionnel : projets, compétences et expériences.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({

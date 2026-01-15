@@ -54,7 +54,7 @@ const portfolioByLocale = {
     role: "Développeur Full Stack / Génie Logiciel",
     location: "Brazzaville / République du Congo",
     heroImage: {
-      src: "/profile.jpg.jpg",
+      src: "/profile.jpg",
       alt: "Photo professionnelle de James Adonis DJIMBY",
     },
     pitch:
@@ -146,7 +146,7 @@ const portfolioByLocale = {
     role: "Full‑Stack Developer / Software Engineer",
     location: "Brazzaville / Republic of the Congo",
     heroImage: {
-      src: "/profile.jpg.jpg",
+      src: "/profile.jpg",
       alt: "Professional portrait of James Adonis DJIMBY",
     },
     pitch:

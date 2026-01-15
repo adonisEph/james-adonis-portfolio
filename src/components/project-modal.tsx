@@ -4,6 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import { ExternalLink, X } from "lucide-react";
 
+import { getTechMeta } from "@/lib/tech";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -15,6 +16,33 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { PortfolioProject } from "@/content/portfolio";
+
+function PhoneFrame({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative aspect-9/16 overflow-hidden rounded-3xl border bg-card shadow-lg">
+      <div className="absolute inset-2 rounded-[1.8rem] border bg-black" />
+      <div className="absolute left-1/2 top-2 h-5 w-24 -translate-x-1/2 rounded-full bg-card shadow-sm" />
+      <div className="absolute inset-3 overflow-hidden rounded-[1.6rem] bg-black">
+        <Image src={src} alt={alt} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-contain p-2" />
+      </div>
+    </div>
+  );
+}
+
+function DesktopFrame({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative aspect-video overflow-hidden rounded-xl border bg-card shadow-lg">
+      <div className="absolute inset-x-0 top-0 z-10 flex h-8 items-center gap-1.5 border-b bg-muted/60 px-3">
+        <span className="size-2 rounded-full bg-red-500/70" />
+        <span className="size-2 rounded-full bg-yellow-500/70" />
+        <span className="size-2 rounded-full bg-green-500/70" />
+      </div>
+      <div className="absolute inset-x-0 bottom-0 top-8 bg-muted">
+        <Image src={src} alt={alt} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-contain p-3" />
+      </div>
+    </div>
+  );
+}
 
 export function ProjectModal({
   open,
@@ -79,31 +107,36 @@ export function ProjectModal({
 
           <CardContent className="grid gap-4 overflow-auto">
             <div className="flex flex-wrap gap-2">
-              {project.tags.map((t) => (
-                <Badge key={t} variant="secondary">
-                  {t}
-                </Badge>
-              ))}
+              {project.tags.map((t) => {
+                const meta = getTechMeta(t);
+                const Icon = meta.Icon;
+
+                return (
+                  <Badge key={t} variant="secondary" className={meta.badgeClassName}>
+                    {Icon ? <Icon className={meta.iconClassName} /> : null}
+                    {t}
+                  </Badge>
+                );
+              })}
             </div>
 
             {project.screenshots && project.screenshots.length ? (
               <div className="grid gap-3">
                 <p className="text-sm font-medium text-foreground/90">{labels.gallery}</p>
                 <div className="grid gap-3 sm:grid-cols-2">
-                  {project.screenshots.map((img) => (
-                    <div
-                      key={img.src}
-                      className="relative aspect-video overflow-hidden rounded-lg border bg-muted"
-                    >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 50vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
+                  {project.screenshots.map((img) => {
+                    const isMobile = img.alt.toLowerCase().includes("mobile");
+
+                    return (
+                      <div key={img.src} className={isMobile ? "mx-auto w-full max-w-[260px]" : "w-full"}>
+                        {isMobile ? (
+                          <PhoneFrame src={img.src} alt={img.alt} />
+                        ) : (
+                          <DesktopFrame src={img.src} alt={img.alt} />
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ) : null}

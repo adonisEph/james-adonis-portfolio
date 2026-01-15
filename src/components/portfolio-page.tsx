@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ExternalLink, Github, Linkedin, Mail } from "lucide-react";
 
 import { getPortfolio, type Locale } from "@/content/portfolio";
+import { getTechMeta } from "@/lib/tech";
 import { SiteHeader } from "@/components/site-header";
 import { Section } from "@/components/section";
 import { Reveal } from "@/components/reveal";
@@ -263,11 +264,21 @@ export function PortfolioPage() {
               description={t.skills.description}
             >
               <div className="flex flex-wrap gap-2">
-                {portfolio.skills.map((s) => (
-                  <Badge key={s} variant="secondary">
-                    {s}
-                  </Badge>
-                ))}
+                {portfolio.skills.map((s) => {
+                  const meta = getTechMeta(s);
+                  const Icon = meta.Icon;
+
+                  return (
+                    <Badge
+                      key={s}
+                      variant="secondary"
+                      className={meta.badgeClassName}
+                    >
+                      {Icon ? <Icon className={meta.iconClassName} /> : null}
+                      {s}
+                    </Badge>
+                  );
+                })}
               </div>
             </Section>
           </Reveal>
@@ -284,7 +295,7 @@ export function PortfolioPage() {
                     key={p.title}
                     role="button"
                     tabIndex={0}
-                    className="overflow-hidden transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    className="group cursor-pointer overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     onClick={() => setActiveProjectTitle(p.title)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
@@ -301,7 +312,7 @@ export function PortfolioPage() {
                             alt={p.screenshots[0].alt}
                             fill
                             sizes="(max-width: 640px) 100vw, 50vw"
-                            className="object-cover"
+                            className="object-contain p-2 transition-transform duration-200 group-hover:scale-[1.01]"
                           />
                         </div>
                       ) : null}
@@ -310,11 +321,21 @@ export function PortfolioPage() {
                       <CardDescription>{p.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-wrap gap-2">
-                      {p.tags.map((tag) => (
-                        <Badge key={tag} variant="outline">
-                          {tag}
-                        </Badge>
-                      ))}
+                      {p.tags.map((tag) => {
+                        const meta = getTechMeta(tag);
+                        const Icon = meta.Icon;
+
+                        return (
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className={meta.badgeClassName}
+                          >
+                            {Icon ? <Icon className={meta.iconClassName} /> : null}
+                            {tag}
+                          </Badge>
+                        );
+                      })}
                     </CardContent>
                     <CardFooter className="flex flex-wrap gap-2">
                       {p.links?.demo ? (
