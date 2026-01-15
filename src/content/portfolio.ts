@@ -59,7 +59,7 @@ const portfolioByLocale = {
       alt: "Photo professionnelle de James Adonis DJIMBY",
     },
     pitch:
-      "Développeur Full‑Stack orienté produit : j’automatise les processus (Excel → Web) et je conçois des interfaces claires (UI/UX) pour transformer des tâches manuelles en outils fiables, rapides et agréables à utiliser. React • Next.js • Node.js • PostgreSQL.",
+      "Spécialiste en automatisation et développement Full‑Stack. Je transforme vos fichiers Excel et processus manuels en applications intelligentes qui travaillent pour vous 24/7. Expertise : systèmes de gestion automatisée, plateformes de réservation, outils métiers sur mesure. React • Node.js • PostgreSQL.",
     summary:
       "Je conçois des solutions web et des outils métiers sur mesure, avec une approche orientée résultat : automatiser, fiabiliser et accélérer les opérations. J’interviens sur l’architecture, le développement front/back, la base de données et l’intégration des processus (notamment depuis Excel) vers des applications robustes.",
     links: {
@@ -153,7 +153,7 @@ const portfolioByLocale = {
       alt: "Professional portrait of James Adonis DJIMBY",
     },
     pitch:
-      "Product‑minded Full‑Stack developer: I automate workflows (Excel → Web) and design clean UI/UX to turn manual tasks into reliable, fast, and pleasant tools. React • Next.js • Node.js • PostgreSQL.",
+      "Automation and Full‑Stack development specialist. I turn Excel files and manual processes into smart applications that work for you 24/7. Expertise: automated management systems, booking platforms, and custom business tools. React • Node.js • PostgreSQL.",
     summary:
       "I build web applications and custom business tools with a results-driven approach: automate, standardize, and accelerate operations. I work across architecture, frontend/backend development, databases, and process integration (including migrating Excel workflows into robust web apps).",
     links: {

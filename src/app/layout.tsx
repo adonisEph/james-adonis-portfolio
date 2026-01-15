@@ -22,37 +22,37 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon-light.svg?v=3",
+        url: "/favicon-light.svg?v=4",
         type: "image/svg+xml",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/favicon-dark.svg?v=3",
+        url: "/favicon-dark.svg?v=4",
         type: "image/svg+xml",
         media: "(prefers-color-scheme: dark)",
       },
-      { url: "/favicon.svg?v=3", type: "image/svg+xml" },
+      { url: "/favicon.svg?v=4", type: "image/svg+xml" },
     ],
     shortcut: [
       {
-        url: "/favicon-light.svg?v=3",
+        url: "/favicon-light.svg?v=4",
         type: "image/svg+xml",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/favicon-dark.svg?v=3",
+        url: "/favicon-dark.svg?v=4",
         type: "image/svg+xml",
         media: "(prefers-color-scheme: dark)",
       },
     ],
     apple: [
       {
-        url: "/favicon-light.svg?v=3",
+        url: "/favicon-light.svg?v=4",
         type: "image/svg+xml",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/favicon-dark.svg?v=3",
+        url: "/favicon-dark.svg?v=4",
         type: "image/svg+xml",
         media: "(prefers-color-scheme: dark)",
       },

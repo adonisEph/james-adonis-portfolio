@@ -259,7 +259,7 @@ export function PortfolioPage() {
                   priority
                   unoptimized
                   sizes="220px"
-                  className="object-cover object-center scale-[1.12]"
+                  className="object-cover object-[center_18%]"
                 />
               </div>
             </div>
@@ -492,8 +492,8 @@ export function PortfolioPage() {
             </p>
             <Button
               type="button"
-              variant="link"
-              className="h-auto p-0 text-muted-foreground underline underline-offset-4"
+              variant="outline"
+              size="sm"
               onClick={scrollToTop}
             >
               {t.top}
