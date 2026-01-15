@@ -9,6 +9,10 @@ export type PortfolioProject = {
   title: string;
   description: string;
   tags: string[];
+  screenshots?: {
+    src: string;
+    alt: string;
+  }[];
   links?: {
     demo?: string;
     repo?: string;
@@ -27,6 +31,10 @@ export type Portfolio = {
   name: string;
   role: string;
   location: string;
+  heroImage: {
+    src: string;
+    alt: string;
+  };
   pitch: string;
   summary: string;
   links: {
@@ -45,6 +53,10 @@ const portfolioByLocale = {
     name: "James Adonis DJIMBY",
     role: "Développeur Full Stack / Génie Logiciel",
     location: "Brazzaville / République du Congo",
+    heroImage: {
+      src: "/profile.jpg.jpg",
+      alt: "Photo professionnelle de James Adonis DJIMBY",
+    },
     pitch:
       "Spécialiste en automatisation et développement Full‑Stack. Je transforme vos fichiers Excel et processus manuels en applications intelligentes qui travaillent pour vous 24/7. Expertise : systèmes de gestion automatisée, plateformes de réservation, outils métiers sur mesure. React • Node.js • PostgreSQL.",
     summary:
@@ -75,6 +87,36 @@ const portfolioByLocale = {
         description:
           "Outil de gestion pour planifier et suivre les maintenances/vidanges, centraliser les données et réduire les tâches manuelles.",
         tags: ["React", "Node.js", "Vite", "JavaScript"],
+        screenshots: [
+          {
+            src: "/projets/sthic-maintenances-generateurs1.png",
+            alt: "Capture web — Gestion Maintenances et Vidanges Générateurs (1)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs2.png",
+            alt: "Capture web — Gestion Maintenances et Vidanges Générateurs (2)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs3.png",
+            alt: "Capture web — Gestion Maintenances et Vidanges Générateurs (3)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs4.jpeg",
+            alt: "Capture mobile — Gestion Maintenances et Vidanges Générateurs (4)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs5.jpeg",
+            alt: "Capture mobile — Gestion Maintenances et Vidanges Générateurs (5)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs6.jpeg",
+            alt: "Capture mobile — Gestion Maintenances et Vidanges Générateurs (6)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs7.jpeg",
+            alt: "Capture mobile — Gestion Maintenances et Vidanges Générateurs (7)",
+          },
+        ],
         links: {
           repo: "https://github.com/adonisEph/sthic-maintenances-generateurs",
         },
@@ -103,6 +145,10 @@ const portfolioByLocale = {
     name: "James Adonis DJIMBY",
     role: "Full‑Stack Developer / Software Engineer",
     location: "Brazzaville / Republic of the Congo",
+    heroImage: {
+      src: "/profile.jpg.jpg",
+      alt: "Professional portrait of James Adonis DJIMBY",
+    },
     pitch:
       "Automation and Full‑Stack development specialist. I turn Excel files and manual processes into smart applications that work for you 24/7. Expertise: automated management systems, booking platforms, and custom business tools. React • Node.js • PostgreSQL.",
     summary:
@@ -133,6 +179,36 @@ const portfolioByLocale = {
         description:
           "Management tool to plan and track maintenance/oil changes, centralize data, and reduce manual work.",
         tags: ["React", "Node.js", "Vite", "JavaScript"],
+        screenshots: [
+          {
+            src: "/projets/sthic-maintenances-generateurs1.png",
+            alt: "Web screenshot — Generator maintenance project (1)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs2.png",
+            alt: "Web screenshot — Generator maintenance project (2)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs3.png",
+            alt: "Web screenshot — Generator maintenance project (3)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs4.jpeg",
+            alt: "Mobile screenshot — Generator maintenance project (4)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs5.jpeg",
+            alt: "Mobile screenshot — Generator maintenance project (5)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs6.jpeg",
+            alt: "Mobile screenshot — Generator maintenance project (6)",
+          },
+          {
+            src: "/projets/sthic-maintenances-generateurs7.jpeg",
+            alt: "Mobile screenshot — Generator maintenance project (7)",
+          },
+        ],
         links: {
           repo: "https://github.com/adonisEph/sthic-maintenances-generateurs",
         },

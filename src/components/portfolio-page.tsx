@@ -1,11 +1,14 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { ExternalLink, Github, Linkedin, Mail } from "lucide-react";
 
 import { getPortfolio, type Locale } from "@/content/portfolio";
 import { SiteHeader } from "@/components/site-header";
 import { Section } from "@/components/section";
+import { Reveal } from "@/components/reveal";
+import { ProjectModal } from "@/components/project-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,29 +47,35 @@ const copy: Record<Locale, Copy> = {
   fr: {
     about: {
       title: "À propos",
-      description: "Une courte présentation orientée impact.",
-      note: "Si tu veux, on peut reformuler cette section pour qu’elle soit encore plus orientée recrutement (résultats, domaines, stack, types de projets).",
+      description:
+        "Une vision claire, orientée automatisation, fiabilité et impact opérationnel.",
+      note:
+        "Je conçois des solutions sur mesure qui remplacent les fichiers dispersés et les saisies manuelles par des workflows structurés, traçables et faciles à maintenir.",
     },
     skills: {
       title: "Compétences",
-      description: "Les technos et sujets sur lesquels tu es à l’aise.",
+      description:
+        "Stack technique, bases de données et domaines d’expertise (automatisation et outils métiers).",
     },
     projects: {
       title: "Projets",
-      description: "Une sélection de réalisations avec stack et liens.",
+      description:
+        "Sélection de réalisations avec contexte, stack et liens (code / démo).",
       demo: "Démo",
       code: "Code",
     },
     experience: {
       title: "Expérience",
-      description: "Expériences pertinentes (focus impact).",
+      description:
+        "Expérience professionnelle axée sur l’organisation, le suivi et l’automatisation des opérations.",
     },
     contact: {
       title: "Contact",
-      description: "Un message rapide — ou un simple lien mail.",
+      description:
+        "Pour une opportunité, un projet ou une collaboration, contacte-moi via email ou LinkedIn.",
       formTitle: "Envoyer un message",
       formDesc:
-        "Ce formulaire est visuel (pas d’envoi côté serveur pour l’instant).",
+        "Tu peux utiliser le bouton email ci-dessous (formulaire visuel).",
       name: "Ton nom",
       email: "Ton email",
       message: "Ton message",
@@ -80,28 +89,34 @@ const copy: Record<Locale, Copy> = {
   en: {
     about: {
       title: "About",
-      description: "A short, impact-driven introduction.",
-      note: "If you want, we can rewrite this section to be even more recruiter-friendly (results, domains, stack, project types).",
+      description:
+        "A clear approach focused on automation, reliability, and operational impact.",
+      note:
+        "I build tailored solutions that replace scattered spreadsheets and repetitive manual work with structured, traceable, and maintainable workflows.",
     },
     skills: {
       title: "Skills",
-      description: "Technologies and topics you work with.",
+      description:
+        "Tech stack, databases, and expertise areas (automation and business tools).",
     },
     projects: {
       title: "Projects",
-      description: "A selection of work with stack and links.",
+      description:
+        "Selected projects with context, stack, and links (code / demo).",
       demo: "Demo",
       code: "Code",
     },
     experience: {
       title: "Experience",
-      description: "Relevant experience (impact first).",
+      description:
+        "Professional experience focused on organization, tracking, and process automation.",
     },
     contact: {
       title: "Contact",
-      description: "A quick message — or a simple mail link.",
+      description:
+        "For an opportunity, a project, or a collaboration, reach out via email or LinkedIn.",
       formTitle: "Send a message",
-      formDesc: "This form is visual only (no backend submission yet).",
+      formDesc: "You can use the email button below (visual form only).",
       name: "Your name",
       email: "Your email",
       message: "Your message",
@@ -129,6 +144,7 @@ function detectInitialLocale(): Locale {
 
 export function PortfolioPage() {
   const [locale, setLocale] = React.useState<Locale>("fr");
+  const [activeProjectTitle, setActiveProjectTitle] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const initial = detectInitialLocale();
@@ -144,6 +160,11 @@ export function PortfolioPage() {
   const t = copy[locale];
   const portfolio = getPortfolio(locale);
 
+  const activeProject =
+    activeProjectTitle
+      ? portfolio.projects.find((p) => p.title === activeProjectTitle) ?? null
+      : null;
+
   const emailHref =
     portfolio.links.primary.find((l) => l.href.startsWith("mailto:"))?.href ??
     "mailto:";
@@ -158,198 +179,253 @@ export function PortfolioPage() {
       />
 
       <main className="mx-auto w-full max-w-5xl px-6 py-10">
-        <section className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <p className="text-sm text-muted-foreground">
-              {t.contact.locationLabel}: {portfolio.location}
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              {portfolio.name}
-            </h1>
-            <p className="text-lg text-muted-foreground">{portfolio.role}</p>
-          </div>
+        <Reveal>
+          <section className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <p className="text-sm text-muted-foreground">
+                  {t.contact.locationLabel}: {portfolio.location}
+                </p>
+                <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                  {portfolio.name}
+                </h1>
+                <p className="text-lg text-muted-foreground">{portfolio.role}</p>
+              </div>
 
-          <p className="max-w-3xl text-base leading-7 text-foreground/90">
-            {portfolio.pitch}
-          </p>
+              <p className="max-w-3xl text-base leading-7 text-foreground/90">
+                {portfolio.pitch}
+              </p>
 
-          <div className="flex flex-wrap gap-3">
-            {portfolio.links.primary.map((l) => {
-              const lower = l.label.toLowerCase();
-              const icon = lower.includes("email") ? (
-                <Mail className="size-4" />
-              ) : lower.includes("github") ? (
-                <Github className="size-4" />
-              ) : lower.includes("linkedin") ? (
-                <Linkedin className="size-4" />
-              ) : (
-                <ExternalLink className="size-4" />
-              );
+              <div className="flex flex-wrap gap-3">
+                {portfolio.links.primary.map((l) => {
+                  const lower = l.label.toLowerCase();
+                  const icon = lower.includes("email") ? (
+                    <Mail className="size-4" />
+                  ) : lower.includes("github") ? (
+                    <Github className="size-4" />
+                  ) : lower.includes("linkedin") ? (
+                    <Linkedin className="size-4" />
+                  ) : (
+                    <ExternalLink className="size-4" />
+                  );
 
-              return (
-                <Button key={l.href} asChild>
-                  <a href={l.href} target="_blank" rel="noopener noreferrer">
-                    {icon}
-                    {l.label}
-                  </a>
-                </Button>
-              );
-            })}
-
-            {portfolio.links.secondary.map((l) => (
-              <Button key={l.href} variant="outline" asChild>
-                <a href={l.href} target="_blank" rel="noopener noreferrer">
-                  {l.label}
-                </a>
-              </Button>
-            ))}
-          </div>
-        </section>
-
-        <div className="mt-12 flex flex-col gap-12">
-          <Section id="about" title={t.about.title} description={t.about.description}>
-            <div className="flex flex-col gap-3 text-sm leading-6 text-foreground/90">
-              <p>{portfolio.summary}</p>
-              <p>{t.about.note}</p>
-            </div>
-          </Section>
-
-          <Section
-            id="skills"
-            title={t.skills.title}
-            description={t.skills.description}
-          >
-            <div className="flex flex-wrap gap-2">
-              {portfolio.skills.map((s) => (
-                <Badge key={s} variant="secondary">
-                  {s}
-                </Badge>
-              ))}
-            </div>
-          </Section>
-
-          <Section
-            id="projects"
-            title={t.projects.title}
-            description={t.projects.description}
-          >
-            <div className="grid gap-4 md:grid-cols-2">
-              {portfolio.projects.map((p) => (
-                <Card key={p.title}>
-                  <CardHeader>
-                    <CardTitle>{p.title}</CardTitle>
-                    <CardDescription>{p.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex flex-wrap gap-2">
-                    {p.tags.map((tag) => (
-                      <Badge key={tag} variant="outline">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </CardContent>
-                  <CardFooter className="gap-2">
-                    {p.links?.demo ? (
-                      <Button asChild>
-                        <a
-                          href={p.links.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="size-4" />
-                          {t.projects.demo}
-                        </a>
-                      </Button>
-                    ) : null}
-                    {p.links?.repo ? (
-                      <Button variant="outline" asChild>
-                        <a
-                          href={p.links.repo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Github className="size-4" />
-                          {t.projects.code}
-                        </a>
-                      </Button>
-                    ) : null}
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </Section>
-
-          <Section
-            id="experience"
-            title={t.experience.title}
-            description={t.experience.description}
-          >
-            <div className="grid gap-4">
-              {portfolio.experience.map((e) => (
-                <Card key={`${e.company}-${e.period}`}>
-                  <CardHeader>
-                    <CardTitle>
-                      {e.role} · {e.company}
-                    </CardTitle>
-                    <CardDescription>
-                      {e.period}
-                      {e.location ? ` · ${e.location}` : ""}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="list-disc pl-5 text-sm text-foreground/90">
-                      {e.highlights.map((h) => (
-                        <li key={h}>{h}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </Section>
-
-          <Section
-            id="contact"
-            title={t.contact.title}
-            description={t.contact.description}
-          >
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t.contact.formTitle}</CardTitle>
-                  <CardDescription>{t.contact.formDesc}</CardDescription>
-                </CardHeader>
-                <CardContent className="grid gap-3">
-                  <Input placeholder={t.contact.name} />
-                  <Input type="email" placeholder={t.contact.email} />
-                  <Textarea placeholder={t.contact.message} />
-                </CardContent>
-                <CardFooter>
-                  <Button asChild>
-                    <a href={emailHref}>
-                      <Mail className="size-4" />
-                      {t.contact.sendByEmail}
-                    </a>
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t.contact.linksTitle}</CardTitle>
-                  <CardDescription>{t.contact.linksDesc}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-wrap gap-2">
-                  {portfolio.links.primary.map((l) => (
-                    <Button key={l.href} variant="outline" asChild>
+                  return (
+                    <Button key={l.href} asChild>
                       <a href={l.href} target="_blank" rel="noopener noreferrer">
+                        {icon}
                         {l.label}
                       </a>
                     </Button>
-                  ))}
-                </CardContent>
-              </Card>
+                  );
+                })}
+
+                {portfolio.links.secondary.map((l) => (
+                  <Button key={l.href} variant="outline" asChild>
+                    <a href={l.href} target="_blank" rel="noopener noreferrer">
+                      {l.label}
+                    </a>
+                  </Button>
+                ))}
+              </div>
             </div>
-          </Section>
+
+            <div className="mx-auto w-full max-w-[240px] md:mx-0">
+              <div className="rounded-2xl border bg-card p-3 shadow-sm">
+                <div className="relative aspect-square overflow-hidden rounded-full bg-muted ring-1 ring-border">
+                  <Image
+                    src={portfolio.heroImage.src}
+                    alt={portfolio.heroImage.alt}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 240px, 240px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        </Reveal>
+
+        <div className="mt-12 flex flex-col gap-12">
+          <Reveal delayMs={50}>
+            <Section id="about" title={t.about.title} description={t.about.description}>
+              <div className="flex flex-col gap-3 text-sm leading-6 text-foreground/90">
+                <p>{portfolio.summary}</p>
+                <p>{t.about.note}</p>
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={100}>
+            <Section
+              id="skills"
+              title={t.skills.title}
+              description={t.skills.description}
+            >
+              <div className="flex flex-wrap gap-2">
+                {portfolio.skills.map((s) => (
+                  <Badge key={s} variant="secondary">
+                    {s}
+                  </Badge>
+                ))}
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={150}>
+            <Section
+              id="projects"
+              title={t.projects.title}
+              description={t.projects.description}
+            >
+              <div className="grid gap-4 sm:grid-cols-2">
+                {portfolio.projects.map((p) => (
+                  <Card
+                    key={p.title}
+                    role="button"
+                    tabIndex={0}
+                    className="overflow-hidden transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    onClick={() => setActiveProjectTitle(p.title)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setActiveProjectTitle(p.title);
+                      }
+                    }}
+                    aria-label={`${p.title} — ${t.projects.code}`}
+                  >
+                      {p.screenshots?.[0] ? (
+                        <div className="relative aspect-video w-full overflow-hidden bg-muted">
+                          <Image
+                            src={p.screenshots[0].src}
+                            alt={p.screenshots[0].alt}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : null}
+                    <CardHeader>
+                      <CardTitle>{p.title}</CardTitle>
+                      <CardDescription>{p.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex flex-wrap gap-2">
+                      {p.tags.map((tag) => (
+                        <Badge key={tag} variant="outline">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </CardContent>
+                    <CardFooter className="flex flex-wrap gap-2">
+                      {p.links?.demo ? (
+                        <Button asChild>
+                          <a
+                            href={p.links.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <ExternalLink className="size-4" />
+                            {t.projects.demo}
+                          </a>
+                        </Button>
+                      ) : null}
+                      {p.links?.repo ? (
+                        <Button variant="outline" asChild>
+                          <a
+                            href={p.links.repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Github className="size-4" />
+                            {t.projects.code}
+                          </a>
+                        </Button>
+                      ) : null}
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={200}>
+            <Section
+              id="experience"
+              title={t.experience.title}
+              description={t.experience.description}
+            >
+              <div className="grid gap-4">
+                {portfolio.experience.map((e) => (
+                  <Card key={`${e.company}-${e.period}`}>
+                    <CardHeader>
+                      <CardTitle>
+                        {e.role} · {e.company}
+                      </CardTitle>
+                      <CardDescription>
+                        {e.period}
+                        {e.location ? ` · ${e.location}` : ""}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="list-disc pl-5 text-sm text-foreground/90">
+                        {e.highlights.map((h) => (
+                          <li key={h}>{h}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={250}>
+            <Section
+              id="contact"
+              title={t.contact.title}
+              description={t.contact.description}
+            >
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t.contact.formTitle}</CardTitle>
+                    <CardDescription>{t.contact.formDesc}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="grid gap-3">
+                    <Input placeholder={t.contact.name} />
+                    <Input type="email" placeholder={t.contact.email} />
+                    <Textarea placeholder={t.contact.message} />
+                  </CardContent>
+                  <CardFooter>
+                    <Button asChild>
+                      <a href={emailHref}>
+                        <Mail className="size-4" />
+                        {t.contact.sendByEmail}
+                      </a>
+                    </Button>
+                  </CardFooter>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t.contact.linksTitle}</CardTitle>
+                    <CardDescription>{t.contact.linksDesc}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex flex-wrap gap-2">
+                    {portfolio.links.primary.map((l) => (
+                      <Button key={l.href} variant="outline" asChild>
+                        <a href={l.href} target="_blank" rel="noopener noreferrer">
+                          {l.label}
+                        </a>
+                      </Button>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+            </Section>
+          </Reveal>
         </div>
 
         <footer className="mt-16 border-t pt-8 text-sm text-muted-foreground">
@@ -363,6 +439,19 @@ export function PortfolioPage() {
           </div>
         </footer>
       </main>
+
+      <ProjectModal
+        open={Boolean(activeProject)}
+        project={activeProject}
+        onClose={() => setActiveProjectTitle(null)}
+        labels={{
+          close: locale === "fr" ? "Fermer" : "Close",
+          demo: t.projects.demo,
+          code: t.projects.code,
+          gallery: locale === "fr" ? "Captures" : "Screenshots",
+          details: locale === "fr" ? "Détails du projet" : "Project details",
+        }}
+      />
     </div>
   );
 }
