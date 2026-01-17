@@ -416,7 +416,7 @@ export function PortfolioPage() {
                   <Card key={`${e.company}-${e.period}`}>
                     <CardHeader>
                       <CardTitle>
-                        <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center justify-between gap-2">
                           <span>
                             {e.role} · {e.company}
                           </span>
@@ -424,9 +424,9 @@ export function PortfolioPage() {
                             <Image
                               src="/Logo_sthic.png"
                               alt="Logo STHIC"
-                              width={56}
-                              height={28}
-                              className="h-7 w-auto object-contain"
+                              width={80}
+                              height={40}
+                              className="h-9 w-auto object-contain"
                               unoptimized
                             />
                           ) : null}
