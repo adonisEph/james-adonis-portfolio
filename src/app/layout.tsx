@@ -20,43 +20,9 @@ export const metadata: Metadata = {
   description:
     "Portfolio professionnel : projets, compétences et expériences.",
   icons: {
-    icon: [
-      {
-        url: "/favicon-light.svg?v=4",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/favicon-dark.svg?v=4",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: dark)",
-      },
-      { url: "/favicon.svg?v=4", type: "image/svg+xml" },
-    ],
-    shortcut: [
-      {
-        url: "/favicon-light.svg?v=4",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/favicon-dark.svg?v=4",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: dark)",
-      },
-    ],
-    apple: [
-      {
-        url: "/favicon-light.svg?v=4",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/favicon-dark.svg?v=4",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: dark)",
-      },
-    ],
+    icon: [{ url: "/favicon.svg?v=5", type: "image/svg+xml" }],
+    shortcut: [{ url: "/favicon.svg?v=5", type: "image/svg+xml" }],
+    apple: [{ url: "/favicon.svg?v=5", type: "image/svg+xml" }],
   },
 };
 

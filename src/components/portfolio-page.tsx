@@ -158,6 +158,21 @@ export function PortfolioPage() {
     } catch {}
   }, [locale]);
 
+  React.useEffect(() => {
+    try {
+      if (window.location.pathname.startsWith("/admin")) return;
+
+      void fetch("/api/track", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          path: `${window.location.pathname}${window.location.hash}`,
+          ref: document.referrer,
+        }),
+      });
+    } catch {}
+  }, []);
+
   const t = copy[locale];
   const portfolio = getPortfolio(locale);
 
@@ -401,7 +416,21 @@ export function PortfolioPage() {
                   <Card key={`${e.company}-${e.period}`}>
                     <CardHeader>
                       <CardTitle>
-                        {e.role} · {e.company}
+                        <div className="flex items-center justify-between gap-3">
+                          <span>
+                            {e.role} · {e.company}
+                          </span>
+                          {e.company.toLowerCase() === "sthic" ? (
+                            <Image
+                              src="/Logo_sthic.png"
+                              alt="Logo STHIC"
+                              width={56}
+                              height={28}
+                              className="h-7 w-auto object-contain"
+                              unoptimized
+                            />
+                          ) : null}
+                        </div>
                       </CardTitle>
                       <CardDescription>
                         {e.period}
