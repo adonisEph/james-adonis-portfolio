@@ -426,7 +426,7 @@ export function PortfolioPage() {
                               alt="Logo STHIC"
                               width={550}
                               height={180}
-                              className="h-[150px] w-auto object-contain"
+                              className="h-[100px] w-auto object-contain"
                               unoptimized
                             />
                           ) : null}
