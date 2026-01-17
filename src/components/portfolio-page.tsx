@@ -424,9 +424,9 @@ export function PortfolioPage() {
                             <Image
                               src="/Logo_sthic.png"
                               alt="Logo STHIC"
-                              width={300}
-                              height={100}
-                              className="h-[72px] w-auto object-contain"
+                              width={450}
+                              height={150}
+                              className="h-[100px] w-auto object-contain"
                               unoptimized
                             />
                           ) : null}
